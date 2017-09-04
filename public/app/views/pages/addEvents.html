@@ -1,0 +1,80 @@
+<style>
+    table{
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+</style>
+
+<div class="jumbotron text-center" ng-if="!main.loggedIn">
+
+    <div>
+        <p>Login</p>
+        <a href="/login" class="btn btn-primary"> Login</a>
+    </div>
+
+</div>
+
+<div class="row" ng-if="main.loggedIn">
+
+    <div class="col-md-3">
+
+    </div>
+
+    <div class="col-md-4" ng-controller="StoryController as story">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Add Your Tasks</div>
+
+                <div class="panel-body">
+
+                    <form ng-submit="story.createStory()">
+
+                        <input class="form-control input-lg" type="text" name="story" ng-model="story.storyData.content"
+                        placeholder="Add tasks" >
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">Your Tasks</div>
+                <!--
+                                <div class="panel-body" ng-repeat="each in story.stories | reverse">
+                                    <p>{{each.content}}		{{each.user}}</p>
+                -->
+                <table style="width:80%">
+                    <tr>
+                        <th>Task</th>
+                        <th>User</th>
+                        <th>Date</th>
+                    </tr>
+
+                    <tr ng-repeat="x in story.stories | reverse">
+                        <td>{{ x.content }}</td>
+                        <td>{{ x.user }}</td>
+                        <td>{{ x.created }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-3">
+
+</div>
+
+
+</div>

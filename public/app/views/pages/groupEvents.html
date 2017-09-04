@@ -1,0 +1,94 @@
+<style>
+    table{
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    #left { float:left;}
+    #right { float:right;}
+
+</style>
+<div ng-controller="GroupEventController as eventCtrl">
+    <!--<div class="row">-->
+    <div id="right" class="panel panel-primary">
+        <div class="panel-heading"><p align="center">Add Group Tasks</p></div>
+
+        <div class="panel-body">
+
+            <form ng-submit="eventCtrl.createGroupEvent()">
+
+                <div ng-controller="GroupController as groups">
+                    <form name="myForm">
+                        <label>Select the group</label>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label ng-repeat="x in groups.grpMain | orderBy:'groupName'">
+                                    <!--<input type="radio" name="{{x.groupName}}" value="{{x.groupName}}" ng-model="groups.groupData.groupname">-->
+                                    <input type="radio" name="{{x.groupName}}" value="{{x.groupName}}" ng-model="eventCtrl.groupEveData.grpname">
+                                        {{x.groupName}}
+                                    <br>
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+                    <!--<div>The selected group is : {{ groups.groupData.groupname }}</div>-->
+                    <div>The selected group is : {{ eventCtrl.groupEveData.grpname }}</div>
+                    <input class="form-control input-sm" type="text" name="event" ng-model="eventCtrl.groupEveData.content"
+                           placeholder="Task Name" >
+                    {{eventCtrl.groupEveData.content}}
+                    <input class="form-control input-sm" type="text" name="location" ng-model="eventCtrl.groupEveData.location"
+                           placeholder="Location" >
+
+                    Start date and time:
+                    <input type="datetime-local" name="sdaytime" ng-model="eventCtrl.groupEveData.startdate" >
+
+                    <br>End date and time:
+                    <input type="datetime-local" name="edaytime" ng-model="eventCtrl.groupEveData.enddate" >
+
+                    <br><br><button type="submit" class="btn btn-success">Add Group Task</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!--</div>-->
+    <div id="left" class="panel panel-success">
+        <div class="panel-heading"><p align="center">Your Group Tasks</p></div>
+
+        <table style="width:100%">
+            <tr>
+                <th>Task</th>
+                <th>User Added</th>
+                <th>Alloted to</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <!--<th>End Date</th>-->
+                <th>Group Name</th>
+            </tr>
+
+            <tr ng-repeat="x in eventCtrl.grpEvents | orderBy:'sdate' ">
+                <td>{{ x.content }}</td>
+                <td>{{ x.user }}</td>
+                <td>{{ x.attendees }}</td>
+                <td>{{ x.location }}</td>
+                <td>{{ x.sdate | date:'d MMM, yyyy hh:mm a'}}</td>
+                <!--<td>{{ x.edate | date:'d MMM, yyyy hh:mm a'}}</td>-->
+                <td>{{ x.groupname }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+

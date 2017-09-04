@@ -1,0 +1,102 @@
+<style>
+	table{
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+	table tr:nth-child(odd) {
+		background-color: #f1f1f1;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+	#left { float:left;}
+	#right { float:right;}
+
+</style>
+<div class="jumbotron text-center" ng-if="!main.loggedIn">
+
+	<div>
+		<h3>Manage all your tasks easily</h3>
+	</div>
+
+	<div>
+		<p>Login to add or view the tasks</p>
+		<a href="/login" class="btn btn-primary"> Login</a>
+	</div>
+
+</div>
+
+<div class="row" ng-if="main.loggedIn">
+	
+	<!--<div class="col-md-3">-->
+
+	<!--</div>-->
+
+	<div ng-controller="StoryController as story">
+		<!--<div class="row">-->
+		<div id="right" class="panel panel-primary">
+			<div class="panel-heading"><p align="center">Add Tasks</p></div>
+
+			<div class="panel-body">
+
+				<form ng-submit="story.createStory()">
+
+					<input class="form-control input-sm" type="text" name="task" ng-model="story.storyData.content"
+						   placeholder="Task Name" >
+					<input class="form-control input-sm" type="text" name="location" ng-model="story.storyData.location"
+						   placeholder="Location" >
+					<input class="form-control input-sm" type="text" name="atte1" ng-model="story.storyData.attendee1"
+						   placeholder="attendee" >
+					<!--<input class="form-control input-sm" type="text" name="atte2" ng-model="story.storyData.attendee2"-->
+						   <!--placeholder="attendees" >-->
+					<!--<input class="form-control input-sm" type="text" name="atte3" ng-model="story.storyData.attendee3"-->
+						   <!--placeholder="attendees" >-->
+					<!--<input class="form-control input-sm" type="text" name="atte4" ng-model="story.storyData.attendee4"-->
+						   <!--placeholder="attendees" >-->
+
+					Start date and time:
+					<input type="datetime-local" name="sdaytime" ng-model="story.storyData.startdate" >
+
+					<br>End date and time:
+					<input type="datetime-local" name="edaytime" ng-model="story.storyData.enddate" >
+
+					<br><br><button type="submit" class="btn btn-success">Add Task</button>
+
+				</form>
+			</div>
+		</div>
+		<!--</div>-->
+		<div id="left" class="panel panel-success">
+			<div class="panel-heading"><p align="center">Your Tasks</p></div>
+
+			<table style="width:100%">
+				<tr>
+					<th>Task</th>
+					<th>User</th>
+					<th>Attendee</th>
+					<th>Location</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+				</tr>
+				<!--and {{ x.attendee2 }} and {{ x.attendee3 }} and {{ x.attendee4 }}  -->
+				<tr ng-repeat="x in story.stories | orderBy:'sdate' ">
+					<td>{{ x.content }}</td>
+					<td>{{ x.user }}</td>
+					<td>{{ x.attendee1 }}</td>
+					<!--<br>{{ x.attendee2 }}<br>{{ x.attendee3 }}<br>{{ x.attendee4 }}-->
+					<td>{{ x.location }}</td>
+					<td>{{ x.sdate | date:'d MMM, yyyy hh:mm a'}}</td>
+					<td>{{ x.edate | date:'d MMM, yyyy hh:mm a'}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+		<!--</div>-->
+</div>
+

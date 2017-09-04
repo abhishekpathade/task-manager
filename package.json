@@ -1,0 +1,34 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "Main task manager app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhishekpathade/taskManager.git"
+  },
+  "author": "Abhishek Pathade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhishekpathade/taskManager/issues"
+  },
+  "homepage": "https://github.com/abhishekpathade/taskManager#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.3",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^19.0.0",
+    "jsonwebtoken": "^7.4.0",
+    "mongoose": "^4.9.7",
+    "mongoose-type-email": "^1.0.5",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
+    "socket.io": "^1.7.3"
+  }
+}

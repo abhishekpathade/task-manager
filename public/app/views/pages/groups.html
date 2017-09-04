@@ -1,0 +1,112 @@
+<style>
+	table{
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	th,td {
+		border: 1px solid #dddddd;
+		text-align: center;
+		/*padding: 8px;*/
+	}
+	/*#3,#4 {*/
+		/*border: 1px solid #dddddd;*/
+		/*text-align: center;*/
+		/*padding: 8px;*/
+	/*}*/
+	table tr:nth-child(odd) {
+		background-color: #f1f1f1;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+	#left { float:left;}
+	#right { float:right;}
+
+</style>
+<div class="container" ng-controller="GroupController as groups">
+	<div id="left" class="panel panel-primary">
+		<div class="panel-heading"><p align="center">Create Groups</p></div>
+
+		<div class="panel-body">
+
+			<form ng-submit="groups.createGroup()">
+
+				<h5>Group Name: <input type="text" name="grpname" class="form-control" ng-model="groups.groupData.grpname"
+									   placeholder="Required"></h5>
+				<h5><p align="center">
+				Attendees</p></h5>
+				<table >
+					<tr>
+						<th>Attendee</th>
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><input type="text" name="name1" class="form-control input-sm" ng-model="groups.groupData.name1" placeholder="Required"></td>
+						<td><input type="text" name="email1" class="form-control input-sm" ng-list ng-model="groups.groupData.email1" placeholder="Required"></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><input type="text" name="name2" class="form-control input-sm" ng-model="groups.groupData.name2"></td>
+						<td><input type="text" name="email2" class="form-control input-sm" ng-model="groups.groupData.email2"></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><input type="text" name="name3" class="form-control input-sm" ng-model="groups.groupData.name3"></td>
+						<td><input type="text" name="email3" class="form-control input-sm" ng-model="groups.groupData.email3"></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><input type="text" name="name4" class="form-control input-sm" ng-model="groups.groupData.name4"></td>
+						<td><input type="text" name="email4" class="form-control input-sm" ng-model="groups.groupData.email4"></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><input type="text" name="name5" class="form-control input-sm" ng-model="groups.groupData.name5"></td>
+						<td><input type="text" name="email5" class="form-control input-sm" ng-model="groups.groupData.email5"></td>
+					</tr>
+				</table>
+				<br><p align="center">
+				<button type="submit" class="btn btn-danger" style="margin: auto">Create Group</button>
+				</p>
+			</form>
+		</div>
+	</div>
+
+	<div id="right"  class="panel panel-success">
+		<div class="panel panel-success">
+			<div class="panel-heading"><p align="center">Groups</p></div>
+			<div class="col-md-8">
+				<table style="width:400px" ng-repeat="x in groups.grpMain | orderBy:'groupName' ">
+					<tr>
+						<th >Group Name</th>
+						<th >Attendee</th>
+						<th >Email</th>
+					</tr>
+					<tr >
+						<td rowspan="5">{{ x.groupName}}</td>
+						<td >{{ x.attendees[0].name}}</td>
+						<td >{{ x.attendees[0].email}}</td>
+					</tr>
+					<tr>
+						<td >{{ x.attendees[1].name}}</td>
+						<td >{{ x.attendees[1].email}}</td>
+					</tr>
+					<tr><td >{{ x.attendees[2].name}}</td>
+						<td >{{ x.attendees[2].email}}</td>
+					</tr>
+					<tr>
+						<td >{{ x.attendees[3].name}}</td>
+						<td >{{ x.attendees[3].email}}</td>
+					</tr>
+					<tr>
+						<td >{{ x.attendees[4].name}}</td>
+						<td >{{ x.attendees[4].email}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
