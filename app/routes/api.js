@@ -40,9 +40,9 @@ function createToken(user){
 	return token;
 }
 
-var att_id;
-var groupid=0;
-var grpEvePriority=0;
+// var att_id;
+// var groupid;
+// var grpEvePriority=0;
 
 
 module.exports = function(app, express, io){
@@ -382,13 +382,16 @@ module.exports = function(app, express, io){
         });
     });
 
-    api.post('/grpEventCreate', function(req, res){
+    api.put('/grpEventCreate', function(req, res){
 
 
         console.log(req.decoded.username);
         Groupsdb.findOne({
             groupName: req.body.grpname
         }).select('attendees').exec(function(err, group){
+            var att_id;
+            var groupid;
+            var grpEvePriority;
             var att = group.attendees;
             var index = 0;
             var value = att[0].priority;
@@ -396,13 +399,24 @@ module.exports = function(app, express, io){
                 if (att[i].priority < value && att[i].email!=null) {
                     value = att[i].priority;
                     index = i;
-                    att_id = att[index]._id;
-                    grpEvePriority = att[index].priority+1;
+                    // att_id = att[index]._id;
+                    // grpEvePriority = att[index].priority+1;
                 }
             }
-            console.log("priority: "+att[index].priority);
+            att[index].priority=value+1;
             console.log("email: "+att[index].email);
-            console.log("att_id: "+att_id);
+            // console.log("att_id: "+att_id);
+            if (err)
+                res.send(err);
+
+            group.attendees = att;
+
+            group.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'group updated!' });
+            });
 
             Groupsdb.findOne({
                 groupName: req.body.grpname
@@ -478,17 +492,50 @@ module.exports = function(app, express, io){
                             // console.log("grpEventCreated");
 
                             io.emit('groupEventDB', newGroupEvent);
-                            res.json({message: "new group event created"});
+                            // res.json({message: "new group event created"});
                         });
 
                     });
                 }
             });
-            console.log("changed priority"+grpEvePriority);
+            console.log("changed priority: "+att[index].priority);
 
-            // Groupsdb.findByIdAndUpdate(groupid, { $set: { groupName: '11' }});
+            // console.log("changed priority"+grpEvePriority);
+            // console.log("group id: "+groupid);
+
         });
-        console.log("group id: "+groupid);
+
+        // Groupsdb.findById(groupid).select('attendees').exec(function(err, user){
+        //
+        //     // if (err)
+        //     //     res.send(err);
+        //
+        //     var att = user.attendees;
+        //     for (var i = 0; i < att.length; i++) {
+        //         if (att[i]._id==att_id) {
+        //             att[i].priority=grpEvePriority;
+        //             console.log("priority changed: "+att[i].priority);
+        //         }
+        //     }
+        //
+        //     console.log("old"+user.attendees);
+        //     // console.log("break");
+        //     // console.log(user);
+        //     user.attendees = att;  // update the info
+        //     console.log("priority: "+grpEvePriority);
+        //     console.log("att_id: "+att_id);
+        //     console.log("new2"+att);
+        //
+        //     // update and save
+        //     user.save(function(err) {
+        //         if (err)
+        //             res.send(err);
+        //
+        //         res.json({ message: 'Bear updated!' });
+        //     });
+        //
+        // });
+
 
     });
 
@@ -505,34 +552,6 @@ module.exports = function(app, express, io){
             res.send(groupsEvt);
         });
     });
-
-    // api.put('/addPriority', function(req, res){
-    //
-    //     //     Groupsdb.update(
-    //     //         { "_id":groupid, "attendees._id": att_id},
-    //     //         { "$set": { "attendees.$.priority": grpEvePriority } },
-    //     //         function (err, raw) {
-    //     //             if (err) return handleError(err);
-    //     //             console.log('The raw response from Mongo was ', raw);
-    //     //         }
-    //     //     );
-    //     // });
-    //     console.log('entered addpriority');
-    //     console.log('group name'+req.body.grpname);
-    //
-    //     Groupsdb.update(
-    //         { "_id":groupid},
-    //         { "$set": { "groupName": "11"} },
-    //         function (err, raw) {
-    //             if(err) {
-    //                 res.send(err);
-    //                 return handleError(err);
-    //             }
-    //             res.send(raw);
-    //             console.log('The raw response from Mongo was ', raw);
-    //         });
-    // });
-
 
     return api;
 

@@ -1,0 +1,43 @@
+<style>
+    table{
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    table tr:nth-child(odd) {
+        background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+    #left { float:left;}
+    #right { float:right;}
+
+</style>
+<div ng-controller="GroupEventController as eventCtrl">
+    <!--<div class="row">-->
+    <div id="right" class="panel panel-primary">
+        <div class="panel-heading"><p align="center">Add Group Tasks</p></div>
+
+        <div class="panel-body">
+
+            <form ng-submit="eventCtrl.priorityplus()">
+
+                <div ng-controller="GroupController as groups">
+
+                    <br><br><button type="submit" class="btn btn-success">Add Group Task</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!--</div>-->
+
+</div>
+
+

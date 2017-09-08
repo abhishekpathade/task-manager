@@ -5,7 +5,7 @@ angular.module('grpEventService',[])
         var grpEventFactory = {};
 
         grpEventFactory.create= function(groupEveData){
-            return $http.post('/api/grpEventCreate', groupEveData);
+            return $http.put('/api/grpEventCreate', groupEveData);
         }
 
         grpEventFactory.all = function() {
